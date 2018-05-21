@@ -1,0 +1,9 @@
+<!doctype html>
+<title>Listado de bots</title>
+<h1>Listado de bots</h1>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div style="float:left; width:100%; padding:10px">
+  {% for bot in bot_list %}
+      <li>{{bot}}</li>
+  {% endfor %}
+</div>

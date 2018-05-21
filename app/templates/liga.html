@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <title>Resultados</title>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <body>
+    <head>
+      <ul>
+        <li><a class="active" href="/">Resultados</a></li>
+        <li><a href="/subirbot">Subir bot</a></li>
+      </ul>
+    </head>
+    <h1>Liga callejera del mancala</h1>
+    <div style="float:left; width:65%;">
+      <h3>Última ejecución: {{ exec_date }}</h3>
+      {% for table in tables %}
+      <h2>{{titles[loop.index]}}</h2>
+      {{ table|safe }}
+      {% endfor %}
+    </div>
+    <h2>Desarrollado por</h2>
+    <div style="float:right; width:35%;">
+      <div class="github-card" data-github="AlvaroGarciaJaen" data-width="400" data-height="" data-theme="default"></div>
+      <div class="github-card" data-github="antoniomdk" data-width="400" data-height="" data-theme="default"></div>
+      <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+    </div>
+  </body>
+</html>
