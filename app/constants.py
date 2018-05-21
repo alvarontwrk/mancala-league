@@ -1,5 +1,5 @@
 # Constants
-BOTS_FOLDER = 'Bots'
+BOTS_FOLDER = 'bots'
 RANKING_CSV = 'data/ranking.csv'
 MATCHES_CSV = 'data/matches.csv'
 MANCALA_COMMAND = 'java -jar ./bin/MancalaNoGUI.jar -p1 {} -p2 {} -t 2'
