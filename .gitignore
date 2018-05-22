@@ -60,3 +60,6 @@ target/
 venv
 *.pyc
 app/static/bower_components
+
+bots/
+data/
