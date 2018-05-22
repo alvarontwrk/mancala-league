@@ -1,6 +1,5 @@
 import subprocess
 import os
-import atexit
 import glob
 import logging
 import time
@@ -8,12 +7,8 @@ from threading import Thread
 from functools import reduce
 from collections import namedtuple
 import pandas as pd
-from apscheduler.scheduler import Scheduler
 from app.utilities import extract_numbers
-from app.constants import RUN_INTERVAL, DATA_FOLDER, MANCALA_COMMAND, MATCHES_CSV, RANKING_CSV, BOTS_FOLDER
-
-cron = Scheduler(daemon=True)
-cron.start()
+from app.constants import *
 
 MatchData = namedtuple('MatchData', """player1 player2 points_p1 points_p2
                         time_p1 time_p2 timeouts_p1 timeouts_p2""")
@@ -104,7 +99,6 @@ def create_ranking_table(table):
     return result
 
 
-@cron.interval_schedule(minutes=RUN_INTERVAL)
 def run_competition():
     if is_running_competition:
         return False
@@ -131,12 +125,3 @@ def get_current_data():
     ranking = pd.read_csv(RANKING_CSV)
     matches = pd.read_csv(MATCHES_CSV)
     return (exec_date, ranking, matches)
-
-
-atexit.register(lambda: cron.shutdown(wait=False))
-
-if not os.path.isdir(BOTS_FOLDER):
-    os.mkdir(BOTS_FOLDER)
-
-if not os.path.isdir(DATA_FOLDER):
-    os.mkdir(DATA_FOLDER)
