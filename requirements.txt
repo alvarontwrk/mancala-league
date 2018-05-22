@@ -1,5 +1,5 @@
 APScheduler==2.1.2
-click==6.7
+click
 Flask
 Flask-Script
 Jinja2
@@ -8,6 +8,6 @@ Werkzeug
 itsdangerous
 Pandas
 Numpy
-python-dateutil==2.7.3
-pytz==2018.4
-six==1.11.0
+python-dateutil
+pytz
+six

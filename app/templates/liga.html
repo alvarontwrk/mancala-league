@@ -1,23 +1,28 @@
 <!doctype html>
 <html lang="en">
-  <title>Resultados</title>
-  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <head>
+    <title>Resultados</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mancala.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
   <body>
-    <head>
-      <ul>
-        <li><a class="active" href="/">Resultados</a></li>
+    <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Resultados</a></li>
         <li><a href="/subirbot">Subir bot</a></li>
+        <li><a href="/lista">Listado</a></li>
       </ul>
-    </head>
-    <h1>Liga callejera del mancala</h1>
-    <div style="float:left; width:65%;">
+      </div>
+    </nav>
+    <div style="float:left; width:65%; padding-left:1em;">
+      <h1 class="league_title">Liga callejera del mancala</h1>
       <h3>Última ejecución: {{ exec_date }}</h3>
       {% for table in tables %}
       <h2>{{titles[loop.index]}}</h2>
       {{ table|safe }}
       {% endfor %}
     </div>
-    <h2>Desarrollado por</h2>
+    <h1>Desarrollado por</h1>
     <div style="float:right; width:35%;">
       <div class="github-card" data-github="AlvaroGarciaJaen" data-width="400" data-height="" data-theme="default"></div>
       <div class="github-card" data-github="antoniomdk" data-width="400" data-height="" data-theme="default"></div>

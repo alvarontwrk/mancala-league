@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <title>Subir bot</title>
-  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mancala.css') }}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <body>
-      <div class="header">
-        <head>
-          <ul>
-            <li><a href="/">Resultados</a></li>
-            <li><a class="active" href="/subirbot">Subir bot</a></li>
-          </ul>
-        </head>
+    <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Resultados</a></li>
+        <li class="active"><a href="/subirbot">Subir bot</a></li>
+        <li><a href="/lista">Listado</a></li>
+      </ul>
       </div>
-      <div>
-        <h4>Sube los archivos de cabecera e implementación de tu bot.</h4>
-        <form action="upload" method="post" enctype="multipart/form-data">
-          <input type="file" multiple="" name="file[]" class="span3" /><br />
-          <input type="submit" value="Subir"  class="span2">
-        </form>
-      </div>
+    </nav>
+    <div style="padding-left:1em;">
+      <h4>Sube los archivos de cabecera e implementación de tu bot.</h4>
+      <form action="upload" method="post" enctype="multipart/form-data">
+        <input type="file" multiple="" name="file[]" class="span3" /><br />
+        <input type="submit" value="Subir"  class="span2">
+      </form>
+    </div>
   </body>
 </html>

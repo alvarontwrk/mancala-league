@@ -1,9 +1,26 @@
 <!doctype html>
-<title>Listado de bots</title>
-<h1>Listado de bots</h1>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div style="float:left; width:100%; padding:10px">
-  {% for bot in bot_list %}
-      <li>{{bot}}</li>
-  {% endfor %}
-</div>
+<html lang="en">
+  <head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mancala.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Listado de bots</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Resultados</a></li>
+        <li><a href="/subirbot">Subir bot</a></li>
+        <li class="active"><a href="/lista">Listado</a></li>
+      </ul>
+      </div>
+    </nav>
+    <div style="padding-left:1em">
+      <h1>Listado de bots</h1>
+      <ul>
+        {% for bot in bot_list %}
+        <li>{{bot}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <body>
+</html>
