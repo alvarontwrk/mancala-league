@@ -44,3 +44,8 @@ def compile_bot(filenames):
         os.remove(path1)
         os.remove(path2)
     return result
+
+
+def render_dataframe(df, *other_classes):
+    classes = 'table table-responsive table-bordered table-hover'
+    return df.to_html(classes=classes + ' ' + ' '.join(other_classes))

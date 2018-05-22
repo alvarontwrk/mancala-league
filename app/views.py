@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import time
 import os
 import logging
 from app import app, league, utilities
 from app.constants import BOTS_FOLDER, UPLOAD_FOLDER
 from werkzeug import secure_filename
 from flask import render_template, request
+from app.utilities import render_dataframe
 
 
 @app.route('/subirbot')
@@ -18,7 +18,9 @@ def subirbot():
 def index():
     try:
         (exec_date, ranking, matches) = league.get_current_data()
-        return render_template('liga.html', tables=[ranking, matches],
+        ranking_render = render_dataframe(ranking, 'ranking')
+        matches_render = render_dataframe(matches, 'matches')
+        return render_template('liga.html', tables=[ranking_render, matches_render],
                                titles=['na', 'Ranking', 'Partidos'],
                                exec_date=exec_date)
     except FileNotFoundError as ex:
@@ -60,13 +62,21 @@ def upload():
         return 'No se puede compilar el bot'
 
 
-@app.route('/partido/<bot1>/<bot2>')
-def partido(bot1, bot2):
+@app.route('/ejecutar_partido/', methods=['POST'])
+def ejecutar_partido():
+    bot1 = request.form.get('bot1_select')
+    bot2 = request.form.get('bot2_select')
     file1 = os.path.join(BOTS_FOLDER, bot1)
     file2 = os.path.join(BOTS_FOLDER, bot2)
     if os.path.isfile(file1) and os.path.isfile(file2):
         m = league.run_match(file1, file2)
-        t = league.create_matches_table([m]).to_html(classes='matches')
+        t = render_dataframe(league.create_matches_table([m]), 'ranking')
         return render_template('liga.html', tables=[t], titles=['na', 'Partido'])
     else:
         return "No existen los bots seleccionados"
+
+
+@app.route('/partido/')
+def partido():
+    bot_list = os.listdir(BOTS_FOLDER)
+    return render_template('partido.html', bot_list=bot_list)

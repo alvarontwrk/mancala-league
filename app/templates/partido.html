@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Partido</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mancala.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Resultados</a></li>
+        <li><a href="/subirbot">Subir bot</a></li>
+        <li><a href="/lista">Listado</a></li>
+        <li class="active"><a href="/partido">Partido</a></li>
+      </ul>
+    </nav>
+    <div style="float:left; width:50%; padding-left:2em;">
+      <form method='POST' action="{{ url_for('ejecutar_partido') }}">
+        <div class="form-group">
+          <label for="bot1_select">Jugador 1:</label>
+          <select name="bot1_select" class="selectpicker form-control">
+            {% for bot in bot_list %}
+            <option>{{bot}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="bot2_select">Jugador 2:</label>
+          <select name="bot2_select" class="selectpicker form-control">
+            {% for bot in bot_list %}
+            <option>{{bot}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Ejecutar partido</button>
+    </div>
+      </form>
+      </div>
+  </body>
+</html>

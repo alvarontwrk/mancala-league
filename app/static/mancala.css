@@ -3,30 +3,15 @@ h1, h2          { margin: 0; }
 h1              { border-bottom: 2px solid #eee !important; }
 h2              { font-size: 2em !important; }
 
-.league_title              { margin-top:0px; }
+.league-title              { margin-top:0px; }
 
-
-table.dataframe, .dataframe th, .dataframe td {
-  border: none;
-  border-bottom: 1px solid #C8C8C8;
-  border-collapse: collapse;
-  text-align:left;
-  padding: 10px;
-  margin-bottom: 40px;
-  font-size: 1em;
-}
 
 .matches th {
-    background-color: #add8e6;
+    background-color: #bdd8e6;
     color: white;
 }
 
 .ranking th {
-    background-color: #77dd77;
+    background-color: #66ff66;
     color: white;
 }
-
-tr:nth-child(odd)		{ background-color:#eee; }
-tr:nth-child(even)	{ background-color:#fff; }
-
-tr:hover            { background-color: #ffff99;}

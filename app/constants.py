@@ -1,7 +1,8 @@
 # Constants
 BOTS_FOLDER = 'bots'
-RANKING_CSV = 'data/ranking.csv'
-MATCHES_CSV = 'data/matches.csv'
+DATA_FOLDER = 'data'
+RANKING_CSV = '{}/ranking.csv'.format(DATA_FOLDER)
+MATCHES_CSV = '{}/matches.csv'.format(DATA_FOLDER)
 MANCALA_COMMAND = 'java -jar ./bin/MancalaNoGUI.jar -p1 {} -p2 {} -t 2'
 LOG_FILE = 'info.log'
 UPLOAD_FOLDER = 'compilation_enviroment'
