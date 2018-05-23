@@ -2,7 +2,11 @@
 #include "SimulatorLink.h"
 #include <iostream>
 
+<<<<<<< Updated upstream
 #include "RandomBot.h"
+=======
+#include "qwerty.h"
+>>>>>>> Stashed changes
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 
 all:
-	g++ -oRandomBot *.cpp -I./ -lm -std=c++11
+	g++ -oqwerty *.cpp -I./ -lm -std=c++11
 
 
 clean:
-	rm RandomBot
+	rm qwerty
