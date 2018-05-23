@@ -20,16 +20,17 @@ is_running_competition = False
 def process_output(p1, p2, output):
     """ Return a MatchData object with the match information """
     lines = output.split('\n')
-    timeout_error = lines[-2].endswith('proporcionar una acción.')
-    connection_error = lines[0].startswith('No hay comunicación')
-    if connection_error:
-        return MatchData(p1, p2, 0, 0, 0, 0, False, False)
-    if timeout_error:
-        digit = extract_numbers(lines[-2])[0]
-        if digit == 1:
-            return MatchData(p1, p2, 0, 48, 0, 0, True, False)
-        else:
-            return MatchData(p1, p2, 48, 0, 0, 0, False, True)
+    digit = -1
+    for line in lines:
+        timeout_error = line.endswith('proporcionar una acción.')
+        connection_error = line.startswith('No hay comunicación')
+        if timeout_error or connection_error:
+            digit = extract_numbers(line)[0]
+            break
+    if digit == 1:
+        return MatchData(p1, p2, 0, 48, 0, 0, True, False)
+    elif digit == 2:
+        return MatchData(p1, p2, 48, 0, 0, 0, False, True)
     else:
         digits = [extract_numbers(line) for line in lines[-7:-1]]
         return MatchData(p1, p2, digits[0][1], digits[2][1],
@@ -46,6 +47,7 @@ def run_match(p1, p2):
     logging.info('{} vs {}'.format(p1_name, p2_name))
     command = MANCALA_COMMAND.format(p1, p2)
     res = subprocess.check_output(command, shell=True).decode('utf-8')
+    logging.info(res)
     match_data = process_output(p1_name, p2_name, res)
     return match_data
 
@@ -111,8 +113,7 @@ def run_competition(block_thread=True):
         is_running_competition = True
         logging.info('Ejecutando competicion')
         bot_list = glob.glob('{}/*'.format(BOTS_FOLDER))
-        match_list = [(p1, p2)
-                      for p1 in bot_list for p2 in bot_list if p1 != p2]
+        match_list = [(p1, p2) for p1 in bot_list for p2 in bot_list if p1 != p2]
         with Pool() as p:
             match_data = p.starmap(run_match, match_list)
             matches_table = create_matches_table(match_data)

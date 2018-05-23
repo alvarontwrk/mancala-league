@@ -15,13 +15,17 @@
       </ul>
     </nav>
     <div style="float:left; width:60%; padding-left:1em;">
-      <h1 class="league-title">Liga callejera del mancala</h1>
+      <h1 class="league-title">Liga Underground de Mancala</h1>
       <h3>Última ejecución: {{ exec_date }}</h3>
+      {% if not is_running %}
       <h3 id ="time-left"></h3>
       <script type="text/javascript" src="{{ url_for('static', filename='js/countdown.js') }}"></script>
       <script type="text/javascript">
         countdown("time-left", "{{ next_exec }}");
       </script>
+      {% else %}
+      <h3>En ejecución...</h3>
+      {% endif %}
       {% for table in tables %}
       <h2>{{titles[loop.index]}}</h2>
       {{ table|safe }}
@@ -32,8 +36,10 @@
       <div style="padding-top:1em;">
         <div class="github-card" data-github="AlvaroGarciaJaen" data-width="400" data-height="" data-theme="default"></div>
         <div class="github-card" data-github="antoniomdk" data-width="400" data-height="" data-theme="default"></div>
+	<h2>Apóyanos</h2>
+	<div class="github-card" data-user="AlvaroGarciaJaen" data-repo="mancala-league"></div>
+	<script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
       </div>
-      <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
     </div>
   </body>
 </html>

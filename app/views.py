@@ -18,7 +18,10 @@ def alert_page(title, content):
 
 @bp.route('/subirbot')
 def subirbot():
-    return render_template('upload.html')
+    if league.is_running_competition:
+        return alert_page('Error', 'Se está ejecutando una competicion, no se pueden subir bots.')
+    else:
+        return render_template('upload.html')
 
 
 @bp.route("/")
@@ -30,7 +33,8 @@ def index():
         matches_render = render_dataframe(matches, 'matches')
         return render_template('liga.html', tables=[ranking_render, matches_render],
                                titles=['na', 'Ranking', 'Partidos'],
-                               exec_date=exec_date, next_exec=next_exec)
+                               exec_date=exec_date, next_exec=next_exec,
+                               is_running=league.is_running_competition)
     except FileNotFoundError as ex:
         logging.error(ex)
         return alert_page('No hay datos', """No existen datos actuales de la liga.
@@ -89,5 +93,8 @@ def ejecutar_partido():
 
 @bp.route('/partido/')
 def partido():
-    bot_list = os.listdir(BOTS_FOLDER)
-    return render_template('partido.html', bot_list=bot_list)
+    if league.is_running_competition:
+        return alert_page('Error',
+                'Se está ejecutando una competicion, no se pueden realizar partidos individuales.')
+    else:
+        return render_template('partido.html', bot_list=os.listdir(BOTS_FOLDER))

@@ -30,7 +30,7 @@ def compile_bot(filenames):
     fill_template('main.cpp', UPLOAD_FOLDER, bot=bot_name)
     fill_template('makefile', UPLOAD_FOLDER, bot=bot_name)
     try:
-        subprocess.check_output(MAKE_COMMAND, shell=True).decode('utf-8')
+        subprocess.run(MAKE_COMMAND, shell=True)
         # Move executable to Bots folder.
         os.rename(os.path.join(UPLOAD_FOLDER, bot_name),
                   os.path.join(BOTS_FOLDER, bot_name))
