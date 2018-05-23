@@ -1,8 +1,5 @@
 Bot,Points,Wins,Defeats,Ties,Seeds for,Seeds against,Total Timeouts,Total Time(s)
-EL_CHOCU,12,0,0,12,0,0,0,0.0
-GreedyBot,12,0,0,12,0,0,0,0.0
-KleisliBot,12,0,0,12,0,0,0,0.0
-Pole,12,0,0,12,0,0,0,0.0
-RandomBot,12,0,0,12,0,0,0,0.0
-hesido_yo,12,0,0,12,0,0,0,0.0
-qwerty,12,0,0,12,0,0,0,0.0
+GreedyBot,6,0,0,6,0,0,0,0.0
+KleisliBot,6,0,0,6,0,0,0,0.0
+RandomBot,6,0,0,6,0,0,0,0.0
+qwerty,6,0,0,6,0,0,0,0.0
