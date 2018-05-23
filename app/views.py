@@ -25,11 +25,12 @@ def subirbot():
 def index():
     try:
         (exec_date, ranking, matches) = league.get_current_data()
+        next_exec = league.get_next_execution()
         ranking_render = render_dataframe(ranking, 'ranking')
         matches_render = render_dataframe(matches, 'matches')
         return render_template('liga.html', tables=[ranking_render, matches_render],
                                titles=['na', 'Ranking', 'Partidos'],
-                               exec_date=exec_date)
+                               exec_date=exec_date, next_exec=next_exec)
     except FileNotFoundError as ex:
         logging.error(ex)
         return alert_page('No hay datos', """No existen datos actuales de la liga.

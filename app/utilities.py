@@ -3,7 +3,7 @@ import subprocess
 import logging
 from app import app
 from flask import render_template
-from app.constants import UPLOAD_FOLDER, MAKE_COMMAND, BOTS_FOLDER
+from app.constants import UPLOAD_FOLDER, MAKE_COMMAND, BOTS_FOLDER, ALLOWED_EXTENSIONS
 
 
 def extract_numbers(string):
@@ -13,7 +13,7 @@ def extract_numbers(string):
 
 def allowed_file(filename):
     split = filename.rsplit('.', 1)
-    return len(split) > 1 and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+    return len(split) > 1 and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
 def fill_template(template, output_folder, **kwargs):

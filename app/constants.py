@@ -8,3 +8,4 @@ LOG_FILE = 'info.log'
 UPLOAD_FOLDER = 'compilation_enviroment'
 MAKE_COMMAND = 'make -C {}'.format(UPLOAD_FOLDER)
 EXECUTIONS_PER_DAY = 24
+ALLOWED_EXTENSIONS = set(['hpp', 'h', 'cpp'])

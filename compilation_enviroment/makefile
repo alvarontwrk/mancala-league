@@ -1,7 +1,7 @@
 
 all:
-	g++ -oKleisliBot *.cpp -I./ -lm -std=c++11
+	g++ -oqwerty *.cpp -I./ -lm -std=c++11
 
 
 clean:
-	rm KleisliBot
+	rm qwerty
