@@ -9,6 +9,7 @@ from collections import namedtuple
 import pandas as pd
 from app.utilities import extract_numbers
 from app.constants import *
+from datetime import datetime, timedelta
 
 MatchData = namedtuple('MatchData', """player1 player2 points_p1 points_p2
                         time_p1 time_p2 timeouts_p1 timeouts_p2""")
@@ -125,3 +126,8 @@ def get_current_data():
     ranking = pd.read_csv(RANKING_CSV)
     matches = pd.read_csv(MATCHES_CSV)
     return (exec_date, ranking, matches)
+
+
+def get_next_execution():
+    next_hour = datetime.now() + timedelta(hours = 24 / EXECUTIONS_PER_DAY)
+    return next_hour.strftime('%Y-%m-%d %H:00:00')

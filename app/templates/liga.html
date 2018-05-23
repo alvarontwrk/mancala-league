@@ -17,6 +17,11 @@
     <div style="float:left; width:60%; padding-left:1em;">
       <h1 class="league-title">Liga callejera del mancala</h1>
       <h3>Última ejecución: {{ exec_date }}</h3>
+      <h3 id ="time-left"></h3>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/countdown.js') }}"></script>
+      <script type="text/javascript">
+        countdown("time-left", "{{ next_exec }}");
+      </script>
       {% for table in tables %}
       <h2>{{titles[loop.index]}}</h2>
       {{ table|safe }}
