@@ -12,6 +12,10 @@ from app.utilities import render_dataframe
 bp = Blueprint('bp', __name__)
 
 
+def alert_page(title, content):
+    return render_template('page.html', title=title, content=content)
+
+
 @bp.route('/subirbot')
 def subirbot():
     return render_template('upload.html')
@@ -28,16 +32,18 @@ def index():
                                exec_date=exec_date)
     except FileNotFoundError as ex:
         logging.error(ex)
-        return """No existen datos actuales de la liga.
-                Ejecuta la competición en /ejecutar"""
+        return alert_page('No hay datos', """No existen datos actuales de la liga.
+                Ejecuta la competición en /ejecutar""")
 
 
 @bp.route("/ejecutar1234")
 def ejecutar():
-    if league.run_competition():
-        return 'Ejecutando competición... en unos minutos se actualizarán los resultados'
+    if league.run_competition(block_thread=False):
+        return alert_page('Ejecutando competicion',
+                          'Ejecutando competición... en unos minutos se actualizarán los resultados')
     else:
-        return 'Competición en curso, espera a que termine para ejecutar otra.'
+        return alert_page('Competicion en curso',
+                          'Competición en curso, espera a que termine para ejecutar otra.')
 
 
 @bp.route('/lista')
@@ -53,16 +59,17 @@ def upload():
     cond3 = all(not os.path.exists(os.path.join(UPLOAD_FOLDER, x.filename))
                 for x in uploaded_files)
     if not (cond1 and cond2 and cond3):
-        return 'Sube únicamente los archivos .h y .cpp de tu bot'
+        return alert_page('Error',
+                          'Sube únicamente los archivos .h y .cpp de tu bot')
     filenames = []
     for file in uploaded_files:
         filename = secure_filename(file.filename)
         file.save(os.path.join(UPLOAD_FOLDER, filename))
         filenames.append(filename)
     if utilities.compile_bot(filenames):
-        return 'Bot compilado con exito.'
+        return alert_page('Completado', 'Bot compilado con exito.')
     else:
-        return 'No se puede compilar el bot'
+        return alert_page('Error', 'No se puede compilar el bot')
 
 
 @bp.route('/ejecutar_partido/', methods=['POST'])
@@ -76,7 +83,7 @@ def ejecutar_partido():
         t = render_dataframe(league.create_matches_table([m]), 'ranking')
         return render_template('liga.html', tables=[t], titles=['na', 'Partido'])
     else:
-        return "No existen los bots seleccionados"
+        return alert_page('Error','No existen los bots seleccionados')
 
 
 @bp.route('/partido/')

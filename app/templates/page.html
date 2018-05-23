@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      <title>{{title}}</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mancala.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Resultados</a></li>
+        <li><a href="/subirbot">Subir bot</a></li>
+        <li><a href="/lista">Listado</a></li>
+        <li><a href="/partido">Partido</a></li>
+      </ul>
+    </nav>
+    <div style="padding-left:1em;">{{content}}</div>
+  </body>
+</html>

@@ -19,8 +19,8 @@ def scheduling():
 def check_directories():
     if not os.path.isdir(BOTS_FOLDER):
         os.mkdir(BOTS_FOLDER)
-        if not os.path.isdir(DATA_FOLDER):
-            os.mkdir(DATA_FOLDER)
+    if not os.path.isdir(DATA_FOLDER):
+        os.mkdir(DATA_FOLDER)
 
 
 def start_scheduling():
@@ -28,11 +28,10 @@ def start_scheduling():
         h = int(x * 24 / EXECUTIONS_PER_DAY)
         t = '{}:00'.format(str(h).zfill(2))
         schedule.every().day.at(t).do(run_competition)
-        Thread(target=scheduling).start()
+    Thread(target=scheduling).start()
 
 
 def create_app():
-    # App Initialization
     app = Flask(__name__)
     app.config.from_object('config')
     app.wsgi_app = ProxyFix(app.wsgi_app)

@@ -1,4 +1,5 @@
 import subprocess
+from multiprocessing import Pool
 import os
 import glob
 import logging
@@ -99,24 +100,32 @@ def create_ranking_table(table):
     return result
 
 
-def run_competition():
+def run_competition(block_thread=True):
+    global is_running_competition
     if is_running_competition:
         return False
 
     def inner():
         global is_running_competition
+        is_running_competition = True
         logging.info('Ejecutando competicion')
         bot_list = glob.glob('{}/*'.format(BOTS_FOLDER))
-        is_running_competition = True
-        match_data = [run_match(p1, p2)
+        match_list = [(p1, p2)
                       for p1 in bot_list for p2 in bot_list if p1 != p2]
-        matches_table = create_matches_table(match_data)
-        ranking = create_ranking_table(matches_table)
-        matches_table.set_index(matches_table.columns[0]).to_csv(MATCHES_CSV)
-        ranking.to_csv(RANKING_CSV)
-        is_running_competition = False
-        logging.info('Competición terminada')
-    Thread(target=inner).start()
+        with Pool() as p:
+            match_data = p.starmap(run_match, match_list)
+            matches_table = create_matches_table(match_data)
+            ranking = create_ranking_table(matches_table)
+            matches_table.set_index(
+                matches_table.columns[0]).to_csv(MATCHES_CSV)
+            ranking.to_csv(RANKING_CSV)
+            is_running_competition = False
+            logging.info('Competición terminada')
+
+    if block_thread:
+        inner()
+    else:
+        Thread(target=inner).start()
     return True
 
 
