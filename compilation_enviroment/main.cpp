@@ -2,7 +2,7 @@
 #include "SimulatorLink.h"
 #include <iostream>
 
-#include "KleisliBot.h"
+#include "RandomBot.h"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ int main() {
   Bot *bot = 0;      // Bot que se ejecutará en el simulador
 
   // MODIFICAR: Declarar aquí el bot del alumno. Ejemplo:
-  KleisliBot *rb = new KleisliBot();
+  RandomBot *rb = new RandomBot();
 
   // MODIFICAR: Asignar el bot del alumno a la variable bot. Ejemplo:
   bot = (Bot*)rb;
