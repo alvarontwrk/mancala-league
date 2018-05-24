@@ -84,17 +84,23 @@ def ejecutar_partido():
     file1 = os.path.join(BOTS_FOLDER, bot1)
     file2 = os.path.join(BOTS_FOLDER, bot2)
     if os.path.isfile(file1) and os.path.isfile(file2):
-        m = league.run_match(file1, file2)
-        t = render_dataframe(league.create_matches_table([m]), 'ranking')
+        if request.form.getlist('ida_y_vuelta'):
+            m1 = league.run_match(file1, file2)
+            m2 = league.run_match(file2, file1)
+            matches = [m1, m2]
+        else:
+            m = league.run_match(file1, file2)
+            matches = [m]
+        t = render_dataframe(league.create_matches_table(matches), 'ranking')
         return render_template('liga.html', tables=[t], titles=['na', 'Partido'])
     else:
-        return alert_page('Error','No existen los bots seleccionados')
+        return alert_page('Error', 'No existen los bots seleccionados')
 
 
 @bp.route('/partido/')
 def partido():
     if league.is_running_competition:
         return alert_page('Error',
-                'Se está ejecutando una competicion, no se pueden realizar partidos individuales.')
+                          'Se está ejecutando una competicion, no se pueden realizar partidos individuales.')
     else:
         return render_template('partido.html', bot_list=os.listdir(BOTS_FOLDER))
