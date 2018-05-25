@@ -139,5 +139,7 @@ def get_current_data():
 
 
 def get_next_execution():
-    next_hour = datetime.now() + timedelta(hours = 24 / EXECUTIONS_PER_DAY)
+    now = datetime.now()
+    lapse = 24 / EXECUTIONS_PER_DAY
+    next_hour = now + timedelta(hours = lapse - now.hour % lapse)
     return next_hour.strftime('%Y-%m-%d %H:00:00')
