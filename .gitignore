@@ -63,3 +63,5 @@ app/static/bower_components
 
 bots/
 data/
+compilation_enviroment/makefile
+compilation_enviroment/main.cpp
