@@ -9,3 +9,4 @@ UPLOAD_FOLDER = 'compilation_enviroment'
 MAKE_COMMAND = 'make -C {}'.format(UPLOAD_FOLDER)
 EXECUTIONS_PER_DAY = 12
 ALLOWED_EXTENSIONS = set(['hpp', 'h', 'cpp'])
+BLACK_LIST_FUN = ['system', 'fork', 'exec', 'popen', 'execl', 'execlp']

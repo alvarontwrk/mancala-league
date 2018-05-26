@@ -3,7 +3,7 @@ import subprocess
 import logging
 from app import app
 from flask import render_template
-from app.constants import UPLOAD_FOLDER, MAKE_COMMAND, BOTS_FOLDER, ALLOWED_EXTENSIONS
+from app.constants import UPLOAD_FOLDER, MAKE_COMMAND, BOTS_FOLDER, ALLOWED_EXTENSIONS, BLACK_LIST_FUN
 
 
 def extract_numbers(string):
@@ -25,6 +25,7 @@ def fill_template(template, output_folder, **kwargs):
 def compile_bot(filenames):
     if len(filenames) != 2:
         return False
+
     result = True
     bot_name = os.path.splitext(filenames[0])[0]
     fill_template('main.cpp', UPLOAD_FOLDER, bot=bot_name)
@@ -49,3 +50,22 @@ def compile_bot(filenames):
 def render_dataframe(df, *other_classes):
     classes = 'table table-responsive table-bordered table-hover'
     return df.to_html(classes=classes + ' ' + ' '.join(other_classes))
+
+
+def legal_files(filenames):
+    paths = []
+    legal = True
+    for filename in filenames:
+        path = os.path.join(UPLOAD_FOLDER, filename)
+        paths.append(path)
+        with open(path) as fd:
+            code = ''.join(fd.readlines())
+            for function in BLACK_LIST_FUN:
+                if function in code:
+                    legal = False
+
+    if not legal:
+        for path in paths:
+            os.remove(path)
+
+    return legal

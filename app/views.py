@@ -71,7 +71,10 @@ def upload():
         filename = secure_filename(file.filename)
         file.save(os.path.join(UPLOAD_FOLDER, filename))
         filenames.append(filename)
-    if utilities.compile_bot(filenames):
+    if not utilities.legal_files(filenames):
+        return alert_page('Error',
+                          'Se han detectado llamadas al sistema ilegales')
+    elif utilities.compile_bot(filenames):
         return alert_page('Completado', 'Bot compilado con exito.')
     else:
         return alert_page('Error', 'No se puede compilar el bot')
