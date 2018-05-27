@@ -35,15 +35,11 @@ If you don't want to use it, just execute:
 pip install -r requirements.dev.txt
 ```
 
-#### Note
+#### Deployment notes
 
 For just deploying purposes use **requirements.txt** instead
 
 ### Running
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
 
 ```
 python3 run.py &
