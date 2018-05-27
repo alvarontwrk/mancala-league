@@ -2,7 +2,7 @@
 
 import os
 import logging
-from app import app, league, utilities
+from app import league, utilities
 from app.constants import BOTS_FOLDER, UPLOAD_FOLDER
 from werkzeug import secure_filename
 from flask import render_template, request, Blueprint
@@ -19,7 +19,8 @@ def alert_page(title, content):
 @bp.route('/subirbot')
 def subirbot():
     if league.is_running_competition:
-        return alert_page('Error', 'Se está ejecutando una competicion, no se pueden subir bots.')
+        return alert_page('Error',
+                          'Se está ejecutando una competicion, no se pueden subir bots.')
     else:
         return render_template('upload.html')
 
@@ -31,14 +32,15 @@ def index():
         next_exec = league.get_next_execution()
         ranking_render = render_dataframe(ranking, 'ranking')
         matches_render = render_dataframe(matches, 'matches')
-        return render_template('liga.html', tables=[ranking_render, matches_render],
+        return render_template('liga.html',
+                               tables=[ranking_render, matches_render],
                                titles=['na', 'Ranking', 'Partidos'],
                                exec_date=exec_date, next_exec=next_exec,
                                is_running=league.is_running_competition)
     except FileNotFoundError as ex:
         logging.error(ex)
-        return alert_page('No hay datos', """No existen datos actuales de la liga.
-                Ejecuta la competición en /ejecutar""")
+        return alert_page('No hay datos',
+                          'No existen datos actuales de la liga.')
 
 
 @bp.route("/ejecutar1234")

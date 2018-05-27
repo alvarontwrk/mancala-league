@@ -1,0 +1,16 @@
+schedule
+click
+Flask
+Flask-Script
+Jinja2
+MarkupSafe
+Werkzeug
+itsdangerous
+Pandas
+Numpy
+python-dateutil
+pytz
+six
+pytest
+pytest-cov
+flake8

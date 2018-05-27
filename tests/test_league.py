@@ -1,0 +1,2 @@
+class TestLeague(object):
+    pass
