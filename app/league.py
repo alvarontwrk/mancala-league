@@ -113,7 +113,8 @@ def run_competition(block_thread=True):
         is_running_competition = True
         logging.info('Ejecutando competicion')
         bot_list = glob.glob('{}/*'.format(BOTS_FOLDER))
-        match_list = [(p1, p2) for p1 in bot_list for p2 in bot_list if p1 != p2]
+        match_list = [(p1, p2)
+                      for p1 in bot_list for p2 in bot_list if p1 != p2]
         with Pool() as p:
             match_data = p.starmap(run_match, match_list)
             matches_table = create_matches_table(match_data)
@@ -141,5 +142,5 @@ def get_current_data():
 def get_next_execution():
     now = datetime.now()
     lapse = 24 / EXECUTIONS_PER_DAY
-    next_hour = now + timedelta(hours = lapse - now.hour % lapse)
+    next_hour = now + timedelta(hours=lapse - now.hour % lapse)
     return next_hour.strftime('%Y-%m-%d %H:00:00')

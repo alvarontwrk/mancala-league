@@ -1,7 +1,6 @@
 import os
 import subprocess
 import logging
-from app import app
 from flask import render_template
 from app.constants import UPLOAD_FOLDER, MAKE_COMMAND, BOTS_FOLDER, ALLOWED_EXTENSIONS, BLACK_LIST_FUN
 
