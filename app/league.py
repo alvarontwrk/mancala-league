@@ -12,8 +12,7 @@ from app.utilities import extract_numbers
 from app.constants import *
 from datetime import datetime, timedelta
 
-MatchData = namedtuple('MatchData', """player1 player2 points_p1 points_p2
-                        time_p1 time_p2 timeouts_p1 timeouts_p2""")
+
 is_running_competition = False
 
 
@@ -28,13 +27,13 @@ def process_output(p1, p2, output):
             digit = extract_numbers(line)[0]
             break
     if digit == 1:
-        return MatchData(p1, p2, 0, 48, 0, 0, True, False)
+        return [p1, p2, 0, 48, 0, 0, True, False]
     elif digit == 2:
-        return MatchData(p1, p2, 48, 0, 0, 0, False, True)
+        return [p1, p2, 48, 0, 0, 0, False, True]
     else:
         digits = [extract_numbers(line) for line in lines[-7:-1]]
-        return MatchData(p1, p2, digits[0][1], digits[2][1],
-                         digits[1][1], digits[3][1], False, False)
+        return [p1, p2, digits[0][1], digits[2][1],
+                digits[1][1], digits[3][1], False, False]
 
 
 def run_match(p1, p2):
@@ -47,7 +46,6 @@ def run_match(p1, p2):
     logging.info('{} vs {}'.format(p1_name, p2_name))
     command = MANCALA_COMMAND.format(p1, p2)
     res = subprocess.check_output(command, shell=True).decode('utf-8')
-    logging.info(res)
     match_data = process_output(p1_name, p2_name, res)
     return match_data
 
