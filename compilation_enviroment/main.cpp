@@ -2,11 +2,7 @@
 #include "SimulatorLink.h"
 #include <iostream>
 
-<<<<<<< Updated upstream
-#include "RandomBot.h"
-=======
-#include "qwerty.h"
->>>>>>> Stashed changes
+#include "TaskStruct.h"
 
 using namespace std;
 
@@ -16,7 +12,7 @@ int main() {
   Bot *bot = 0;      // Bot que se ejecutará en el simulador
 
   // MODIFICAR: Declarar aquí el bot del alumno. Ejemplo:
-  RandomBot *rb = new RandomBot();
+  TaskStruct *rb = new TaskStruct();
 
   // MODIFICAR: Asignar el bot del alumno a la variable bot. Ejemplo:
   bot = (Bot*)rb;

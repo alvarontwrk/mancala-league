@@ -26,7 +26,6 @@
       {% else %}
       <h3>En ejecución...</h3>
       {% endif %}
-      <h4>Notisia de última hora: Debido a que el servidor oficial es un poco lento (un poco solo), hemos bajado el tiempo de ejecución para asemejarse a este lo máximo posible. No asustaros si veis un aumento inesperado de timeouts, no es culpa nuestra, es de Aquiles. Firmado: Administrador1</h4>
       {% for table in tables %}
       <h2>{{titles[loop.index]}}</h2>
       {{ table|safe }}

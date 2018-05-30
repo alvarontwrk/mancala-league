@@ -98,7 +98,6 @@ def create_ranking_table(table):
     # Ranking bots
     result = result.sort_values(by=['Points', 'Seeds for', 'Total Time(s)'],
                                 ascending=False)
-    result.index += 1
     return result
 
 
