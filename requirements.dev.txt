@@ -14,3 +14,4 @@ six
 pytest
 pytest-cov
 flake8
+beautifulsoup4
