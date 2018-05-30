@@ -11,3 +11,4 @@ Numpy
 python-dateutil
 pytz
 six
+beautifulsoup4

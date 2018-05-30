@@ -2,6 +2,7 @@ import os
 import subprocess
 import logging
 from flask import render_template
+from bs4 import BeautifulSoup
 from app.constants import UPLOAD_FOLDER, MAKE_COMMAND, BOTS_FOLDER, ALLOWED_EXTENSIONS, BLACK_LIST_FUN
 
 
@@ -46,9 +47,12 @@ def compile_bot(filenames):
     return result
 
 
-def render_dataframe(df, *other_classes):
+def render_dataframe(df, html_id, *other_classes):
     classes = 'table table-responsive table-bordered table-hover'
-    return df.to_html(classes=classes + ' ' + ' '.join(other_classes))
+    all_classes = '{} {}'.format(classes, ' '.join(other_classes))
+    soup = BeautifulSoup(df.to_html(classes=all_classes), "html.parser")
+    soup.find('table')['id'] = html_id
+    return str(soup)
 
 
 def legal_files(filenames):
@@ -62,9 +66,7 @@ def legal_files(filenames):
             for function in BLACK_LIST_FUN:
                 if function in code:
                     legal = False
-
     if not legal:
         for path in paths:
             os.remove(path)
-
     return legal
