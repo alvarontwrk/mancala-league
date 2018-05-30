@@ -3,7 +3,18 @@
   <head>
     <title>Liga Underground Mancala</title>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mancala.css') }}">
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+  <script>
+    $(document).ready(function() { $('#matches').DataTable(); });
+    $(document).ready(function() { $('#ranking').DataTable(); });
+  </script>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -37,9 +48,9 @@
       <div style="padding-top:1em;">
         <div class="github-card" data-github="AlvaroGarciaJaen" data-width="400" data-height="" data-theme="default"></div>
         <div class="github-card" data-github="antoniomdk" data-width="400" data-height="" data-theme="default"></div>
-	<h2>Apóyanos</h2>
-	<div class="github-card" data-user="AlvaroGarciaJaen" data-repo="mancala-league"></div>
-	<script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+        <h2>Apóyanos</h2>
+        <div class="github-card" data-user="AlvaroGarciaJaen" data-repo="mancala-league"></div>
+        <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
       </div>
     </div>
   </body>
