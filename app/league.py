@@ -148,8 +148,7 @@ def get_next_execution():
     return next_hour.strftime('%Y-%m-%d %H:00:00')
 
 
-def get_matches_data(current_data, bot_name):
-    df = current_data[0]
-    select = df.select_dtypes([np.object]).columns[:]
-    mask = np.column_stack([df[col].str.contains(bot_name) for col in select])
-    return df.loc[mask.any(axis=1)]
+def parse_matches_data(data, bot_name):
+    select = data.select_dtypes([np.object]).columns[:]
+    mask = np.column_stack([data[col].str.contains(bot_name) for col in select])
+    return data.loc[mask.any(axis=1)]
