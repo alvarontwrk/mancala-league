@@ -16,6 +16,14 @@ from datetime import datetime, timedelta
 is_running_competition = False
 
 
+def get_bot_list():
+    return os.listdir(BOTS_FOLDER)
+
+
+def get_bot_filepath(bot_name):
+    return os.path.join(BOTS_FOLDER, bot_name)
+
+
 def process_output(p1, p2, output):
     """ Return a MatchData object with the match information """
     lines = output.split('\n')
@@ -41,12 +49,10 @@ def run_match(p1, p2):
     Run a match between p1 and p2.
     Returns a MatchData with the relevant data of the match.
     """
-    p1_name = os.path.basename(p1)
-    p2_name = os.path.basename(p2)
-    logging.info('{} vs {}'.format(p1_name, p2_name))
-    command = MANCALA_COMMAND.format(p1, p2)
+    logging.info('{} vs {}'.format(p1, p2))
+    command = MANCALA_COMMAND.format(get_bot_filepath(p1), get_bot_filepath(p2))
     res = subprocess.check_output(command, shell=True).decode('utf-8')
-    match_data = process_output(p1_name, p2_name, res)
+    match_data = process_output(p1, p2, res)
     return match_data
 
 
@@ -110,7 +116,7 @@ def run_competition(block_thread=True):
         global is_running_competition
         is_running_competition = True
         logging.info('Ejecutando competicion')
-        bot_list = glob.glob('{}/*'.format(BOTS_FOLDER))
+        bot_list = get_bot_list()
         match_list = [(p1, p2)
                       for p1 in bot_list for p2 in bot_list if p1 != p2]
         with Pool() as p:

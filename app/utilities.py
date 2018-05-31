@@ -25,7 +25,6 @@ def fill_template(template, output_folder, **kwargs):
 def compile_bot(filenames):
     if len(filenames) != 2:
         return False
-
     result = True
     bot_name = os.path.splitext(filenames[0])[0]
     fill_template('main.cpp', UPLOAD_FOLDER, bot=bot_name)
@@ -44,7 +43,7 @@ def compile_bot(filenames):
         path2 = os.path.join(UPLOAD_FOLDER, filenames[1])
         os.remove(path1)
         os.remove(path2)
-    return result
+        return result
 
 
 def render_dataframe(df, html_id, *other_classes):

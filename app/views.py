@@ -28,15 +28,14 @@ def subirbot():
 @bp.route("/")
 def index():
     try:
-        (exec_date, ranking, matches) = league.get_current_data()
+        (ranking, exec_date) = league.get_current_data(True, False, True)
         next_exec = league.get_next_execution()
         ranking_render = render_dataframe(df=ranking, html_id='ranking')
-        matches_render = render_dataframe(df=matches, html_id='matches')
-        return render_template('liga.html',
-                               tables=[ranking_render, matches_render],
-                               titles=['na', 'Ranking', 'Partidos'],
+        return render_template('liga.html', tables=[ranking_render],
+                               titles=['na', 'Ranking'],
                                exec_date=exec_date, next_exec=next_exec,
-                               is_running=league.is_running_competition)
+                               is_running=league.is_running_competition,
+                               bot_list=league.get_bot_list())
     except FileNotFoundError as ex:
         logging.error(ex)
         return alert_page('No hay datos',
@@ -55,7 +54,7 @@ def ejecutar():
 
 @bp.route('/lista')
 def lista():
-    return render_template('lista.html', bot_list=os.listdir(BOTS_FOLDER))
+    return render_template('lista.html', bot_list=league.get_bot_list())
 
 
 @bp.route('/upload', methods=['POST'])
@@ -86,8 +85,8 @@ def upload():
 def ejecutar_partido():
     bot1 = request.form.get('bot1_select')
     bot2 = request.form.get('bot2_select')
-    file1 = os.path.join(BOTS_FOLDER, bot1)
-    file2 = os.path.join(BOTS_FOLDER, bot2)
+    file1 = league.get_bot_filepath(bot1)
+    file2 = league.get_bot_filepath(bot2)
     if os.path.isfile(file1) and os.path.isfile(file2):
         if request.form.getlist('ida_y_vuelta'):
             m1 = league.run_match(file1, file2)
@@ -102,10 +101,16 @@ def ejecutar_partido():
         return alert_page('Error', 'No existen los bots seleccionados')
 
 
+@bp.route('/mostrar_resultados/', methods=['POST'])
+def mostrar_resultados():
+    bot = request.form.get('bot_select')
+    return render_template('resultados.html', tables=[])
+
+
 @bp.route('/partido/')
 def partido():
     if league.is_running_competition:
         return alert_page('Error',
                           'Se está ejecutando una competicion, no se pueden realizar partidos individuales.')
     else:
-        return render_template('partido.html', bot_list=os.listdir(BOTS_FOLDER))
+        return render_template('partido.html', bot_list=league.get_bot_list())

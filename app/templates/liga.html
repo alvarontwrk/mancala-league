@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
     <script>
-      $(document).ready(function() { $('#matches').DataTable(); });
       $(document).ready(function() { $('#ranking').DataTable(); });
     </script>
   </head>
@@ -33,10 +32,25 @@
       {% else %}
       <h3>En ejecución...</h3>
       {% endif %}
+
       {% for table in tables %}
       <h2>{{titles[loop.index]}}</h2>
       {{ table|safe }}
       {% endfor %}
+
+      <h2>Partidos</h2>
+      <form method='POST' action="{{ url_for('bp.mostrar_resultados') }}">
+        <div class="form-inline">
+          <label for="bot1_select">Jugador 1:</label>
+          <select name="bot_select" class="selectpicker form-control">
+            {% for bot in bot_list %}
+            <option>{{bot}}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn btn-primary">Mostrar resultados</button>
+        </div>
+      </form>
+
       <div style="padding-top:1em; width:100%">
         <h1 class="league-title">Desarrollado por</h1>
         <div style="padding-top:1em;">
