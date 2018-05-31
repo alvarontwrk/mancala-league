@@ -136,11 +136,15 @@ def run_competition(block_thread=True):
     return True
 
 
-def get_current_data():
-    exec_date = time.ctime((os.stat(RANKING_CSV).st_mtime))
-    ranking = pd.read_csv(RANKING_CSV)
-    matches = pd.read_csv(MATCHES_CSV)
-    return (exec_date, ranking, matches)
+def get_current_data(date=True, ranking=True, matches=True):
+    result = []
+    if date:
+        result.append(time.ctime((os.stat(RANKING_CSV).st_mtime)))
+    if ranking:
+        result.append(pd.read_csv(RANKING_CSV))
+    if matches:
+        result.append(pd.read_csv(MATCHES_CSV))
+    return tuple(result)
 
 
 def get_next_execution():
@@ -148,3 +152,9 @@ def get_next_execution():
     lapse = 24 / EXECUTIONS_PER_DAY
     next_hour = now + timedelta(hours=lapse - now.hour % lapse)
     return next_hour.strftime('%Y-%m-%d %H:00:00')
+
+
+def parse_matches_data(data, bot_name):
+    select = data.select_dtypes([np.object]).columns[:]
+    mask = np.column_stack([data[col].str.contains(bot_name) for col in select])
+    return data.loc[mask.any(axis=1)]
