@@ -28,7 +28,7 @@ def subirbot():
 @bp.route("/")
 def index():
     try:
-        (ranking, exec_date) = league.get_current_data(True, False, True)
+        (exec_date, ranking) = league.get_current_data(True, False, True)
         next_exec = league.get_next_execution()
         ranking_render = render_dataframe(df=ranking, html_id='ranking')
         return render_template('liga.html', tables=[ranking_render],
@@ -85,26 +85,21 @@ def upload():
 def ejecutar_partido():
     bot1 = request.form.get('bot1_select')
     bot2 = request.form.get('bot2_select')
-    file1 = league.get_bot_filepath(bot1)
-    file2 = league.get_bot_filepath(bot2)
-    if os.path.isfile(file1) and os.path.isfile(file2):
-        if request.form.getlist('ida_y_vuelta'):
-            m1 = league.run_match(file1, file2)
-            m2 = league.run_match(file2, file1)
-            matches = [m1, m2]
-        else:
-            m = league.run_match(file1, file2)
-            matches = [m]
-        t = render_dataframe(league.create_matches_table(matches), 'ranking')
-        return render_template('liga.html', tables=[t], titles=['na', 'Partido'])
-    else:
-        return alert_page('Error', 'No existen los bots seleccionados')
+    m1 = league.run_match(bot1, bot2)
+    matches = [m1]
+    if request.form.getlist('ida_y_vuelta'):
+        m2 = league.run_match(bot2, bot1)
+        matches.append(m2)
+    table = render_dataframe(league.create_matches_table(matches), 'ranking')
+    return render_template('resultados.html', table=table)
 
 
 @bp.route('/mostrar_resultados/', methods=['POST'])
 def mostrar_resultados():
-    bot = request.form.get('bot_select')
-    return render_template('resultados.html', tables=[])
+    bot  = request.form.get('bot_select')
+    data = league.get_bot_matches_data(bot)
+    table = render_dataframe(df=data, html_id='matches')
+    return render_template('resultados.html', table=table)
 
 
 @bp.route('/partido/')

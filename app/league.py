@@ -4,13 +4,14 @@ import os
 import glob
 import logging
 import time
+from datetime import datetime, timedelta
 from threading import Thread
 from functools import reduce
 from collections import namedtuple
 import pandas as pd
+import numpy as np
 from app.utilities import extract_numbers
 from app.constants import *
-from datetime import datetime, timedelta
 
 
 is_running_competition = False
@@ -158,3 +159,7 @@ def parse_matches_data(data, bot_name):
     select = data.select_dtypes([np.object]).columns[:]
     mask = np.column_stack([data[col].str.contains(bot_name) for col in select])
     return data.loc[mask.any(axis=1)]
+
+
+def get_bot_matches_data(bot_name):
+    return parse_matches_data(get_current_data(False, False, True)[0], bot_name)
