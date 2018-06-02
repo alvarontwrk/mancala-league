@@ -1,4 +1,4 @@
-# Mandala-League
+# Mancala-League
 
 Underground Mancala League's Server. Web app for running mancala bots competitions based on Decsai Mancala simulator.
 
