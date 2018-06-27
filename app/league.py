@@ -51,7 +51,9 @@ def run_match(p1, p2):
     Returns a MatchData with the relevant data of the match.
     """
     logging.info('{} vs {}'.format(p1, p2))
-    command = MANCALA_COMMAND.format(get_bot_filepath(p1), get_bot_filepath(p2))
+    command = MANCALA_COMMAND.format(
+        get_bot_filepath(p1),
+        get_bot_filepath(p2))
     res = subprocess.check_output(command, shell=True).decode('utf-8')
     match_data = process_output(p1, p2, res)
     return match_data
@@ -157,9 +159,11 @@ def get_next_execution():
 
 def parse_matches_data(data, bot_name):
     select = data.select_dtypes([np.object]).columns[:]
-    mask = np.column_stack([data[col].str.contains(bot_name) for col in select])
+    mask = np.column_stack([data[col].str.contains(bot_name)
+                            for col in select])
     return data.loc[mask.any(axis=1)]
 
 
 def get_bot_matches_data(bot_name):
-    return parse_matches_data(get_current_data(False, False, True)[0], bot_name)
+    return parse_matches_data(get_current_data(
+        False, False, True)[0], bot_name)
